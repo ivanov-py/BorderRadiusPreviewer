@@ -1,34 +1,49 @@
-function edit(a){
-  let figure = document.getElementById('figure');
+function listenSpans() {
+  let spans = document.getElementsByTagName('SPAN');
 
-  let inputValue = a.value;
+  let l = 50;
+  let t = 50;
+  let r = 50;
+  let b = 50;
 
-  let newRadius= `${parseInt(inputValue * figure.offsetWidth / 100)}px`;
+  for (let item of spans) {
+    let parent = item.parentElement;
+    let val = null;
 
-  console.log(1, a.id, newRadius);
+    function roll(e) {
+      e.preventDefault();
+      if (item.id == 'left' || item.id == 'right') {
+        // x = e.clientX - parent.offsetLeft;
+        val = (e.clientY - parent.offsetTop) * 100 / 300;
+        val = val < 0 ? 0 : val > 100 ? 100 : val;
+        item.style.top = `calc(${val}% - 2.5%)`;
+        if (item.id == 'left') {
+          l = val;
+        } else {
+          r = 100 - val;
+        }
+      } else {
+        val = (e.clientX - parent.offsetLeft) * 100 / 300;
+        val = val < 0 ? 0 : val > 100 ? 100 : val;
+        item.style.left = `calc(${val}% - 2.5%)`;
+        if (item.id == 'top') {
+          t = 100 - val;
+        } else {
+          b = val;
+        }
+      }
+      document.getElementById('figure').style.borderRadius = `${l}% ${t}% ${r}% ${b}%`;
+    }
 
-  switch (a.id) {
-    case 'tl':
-      figure.style.borderTopLeftRadius = newRadius;
-      break;
-    case 'tr':
-      figure.style.borderTopRightRadius = newRadius;
-      break;
-    case 'br':
-      figure.style.borderBottomRightRadius = newRadius;
-      break;
-    case 'bl':
-      figure.style.borderBottomLeftRadius = newRadius;
-      break;
-    default:
-      throw `Unknown element id ${element.id}`;
+    item.addEventListener('mousedown', () => {
+      window.addEventListener('mousemove', roll);
+    });
+    window.addEventListener('mouseup', () => {
+      window.removeEventListener('mousemove', roll);
+    });
   }
 }
 
-function radiusVal(side, value) {
-
-}
-
 window.onload = function() {
-  
+  listenSpans();
 };

@@ -1,6 +1,11 @@
 * {
   margin: 0;
   padding: 0;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
 }
 
 body {
@@ -20,8 +25,9 @@ body {
 }
 
 .content {
-  display: flex;
   flex-direction: column;
+  position: relative;
+  border: 3px dashed silver;
 }
 
 #figure {
@@ -36,20 +42,33 @@ body {
     #0000FF,
     #FF00FF
     );
-  border-radius: 150px;
+  border-radius: 50%;
 }
 
-.controls {
-  display: flex;
-  flex-direction: column;
+span {
+  position: absolute;
+  width: 5%;
+  height: 5%;
+  background-color: white;
+  border: 1px solid black;
 }
 
-.control {
-  padding: 4px;
-  display: flex;
-  justify-content: space-between;
+#left {
+  top: calc(50% - 2.5%);
+  left: calc(0% - 2.5%);
 }
 
-input {
-  background-color: silver
+#top {
+  top: calc(0% - 2.5%);
+  left: calc(50% - 2.5%);
+}
+
+#right {
+  top: calc(50% - 2.5%);
+  left: calc(100% - 2.5%);
+}
+
+#bottom {
+  top: calc(100% - 2.5%);
+  left: calc(50% - 2.5%);
 }
